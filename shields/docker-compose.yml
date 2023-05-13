@@ -7,7 +7,7 @@ networks:
 services:
   shields:
     image: shieldsio/shields:next
-    restart: always
+    restart: unless-stopped
     environment:
       GH_TOKEN: "${GH_TOKEN}"
     labels:
