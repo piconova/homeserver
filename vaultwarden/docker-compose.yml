@@ -1,0 +1,22 @@
+version: "3"
+
+networks:
+  web:
+    external: true
+
+services:
+  vaultwarden:
+    image: docker.io/vaultwarden/server:latest
+    restart: always
+    environment:
+      WEBSOCKET_ENABLED: "true"
+      SIGNUPS_ALLOWED: "false"
+    volumes:
+      - "./data:/data"
+    labels:
+      - traefik.http.routers.vaultwarden.rule=Host(`vaultwarden.${HOST}`)
+      - traefik.http.routers.vaultwarden.tls=true
+      - traefik.http.routers.vaultwarden.tls.certresolver=lets-encrypt
+      - traefik.port=80
+    networks:
+      - web

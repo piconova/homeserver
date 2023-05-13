@@ -1,0 +1,18 @@
+version: "3"
+
+networks:
+  web:
+    external: true
+
+services:
+  traefik:
+    image: traefik:v2.2
+    restart: always
+    volumes:
+      - "./traefik.toml:/traefik.toml"
+      - "./acme.json:/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - web

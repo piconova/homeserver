@@ -1,0 +1,19 @@
+version: "3"
+
+networks:
+  web:
+    external: true
+
+services:
+  shields:
+    image: shieldsio/shields:next
+    restart: always
+    environment:
+      GH_TOKEN: "${GH_TOKEN}"
+    labels:
+      - traefik.http.routers.shields.rule=Host(`shields.${HOST}`)
+      - traefik.http.routers.shields.tls=true
+      - traefik.http.routers.shields.tls.certresolver=lets-encrypt
+      - traefik.port=80
+    networks:
+      - web
